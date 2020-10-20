@@ -20,6 +20,22 @@ const jokes = [
   "Q: Why did the school kids eat their homework?\nA: Because their teacher told them it was a piece of cake.",
 ]; // from http://www.laughfactory.com/jokes/clean-jokes
 
+// ============ regExp for greeting ============
+let reg_str = "("; // append greeting ( and all other expressions)
+commonGreetings.forEach((element) => {
+  reg_str += `(${element})|`;
+});
+reg_str += ")"; // close bracket
+const reg_greeting = new RegExp("(\\b" + reg_str + "\\b\\s*)", "ig"); // ig: i=>ignore case; g=>return all matches
+
+// ============ regExp for goodbye ============
+reg_str = "("; // append greeting ( and all other expressions)
+commonGoodbyes.forEach((element) => {
+  reg_str += `(${element})|`;
+});
+reg_str += ")"; // close bracket
+const reg_bye = new RegExp("(\\b" + reg_str + "\\b\\s*)", "ig"); // ig: i=>ignore case; g=>return all matches
+
 express()
   // Below are methods that are included in express(). We chain them for convenience.
   // --------------------------------------------------------------------------------
@@ -87,24 +103,10 @@ express()
       // If someone puts "hi bye" in the text, then the output would be "Hello Goodbye"
       let botMsg = "";
 
-      // ============ match for greeting ============
-      let reg_str = "("; // append greeting ( and all other expressions)
-      commonGreetings.forEach((element) => {
-        reg_str += `(${element})|`;
-      });
-      reg_str += ")"; // close bracket
-
-      // use regular expression
-      // solved:
-      // find exact match for all tokens  e.g. won't match this, helloween, thowdy!
-      // match multiple strings: e.g. hello howdy will not be recognized
-      // match to space " "
-      // current problem:
-      let reg = new RegExp("(\\b" + reg_str + "\\b\\s*)", "ig"); // ig: i=>ignore case; g=>return all matches
-      console.log(reg);
-      console.log(text.match(reg));
+      //console.log(reg);
+      //console.log(text.match(reg));
       let count = 0;
-      text.match(reg).forEach((ele) => {
+      text.match(reg_greeting).forEach((ele) => {
         if (ele !== "" && ele !== " " && count === 0) {
           console.log(ele);
           botMsg += "Hello "; // add hello at the end
@@ -112,23 +114,10 @@ express()
         }
       });
 
-      // ============ match for boodbye ============
-      reg_str = "("; // append greeting ( and all other expressions)
-      commonGoodbyes.forEach((element) => {
-        reg_str += `(${element})|`;
-      });
-      reg_str += ")"; // close bracket
-
-      // use regular expression
-      // solved:
-      // current problem:
-      // will match good-bye which make sense but not desirable may be?...
-      // check with TA
-      reg = new RegExp("(\\b" + reg_str + "\\b\\s*)", "ig"); // ig: i=>ignore case; g=>return all matches
-      console.log(reg);
-      console.log(text.match(reg));
+      //console.log(reg);
+      //sconsole.log(text.match(reg));
       count = 0;
-      text.match(reg).forEach((ele) => {
+      text.match(reg_bye).forEach((ele) => {
         if (ele !== "" && ele !== " " && count === 0) {
           botMsg += "goodBye"; // add bye at the end
           count++;
