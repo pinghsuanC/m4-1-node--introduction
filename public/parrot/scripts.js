@@ -27,7 +27,7 @@ const sendMessage = (event) => {
   updateConversation(message);
 
   // msg from parrot
-  fetch(`/parrot-message/?author=parrot&text=${message.text}`)
+  fetch(`/parrot-message/?author=${message.user}&text=${message.text}`)
     .then((res) => res.json())
     .then((data) => {
       //console.log(data);

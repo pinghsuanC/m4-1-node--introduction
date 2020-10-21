@@ -99,6 +99,10 @@ express()
   // bot message
   .get("/bot-message", (req, res) => {
     const getBotMessage = (text) => {
+      if (text == "" || text == undefined) {
+        // check for "", null and undefined
+        return "Sorry I didn't hear anything...";
+      }
       // it wasn't specified so just append all the answers at the end I guess?
       // If someone puts "hi bye" in the text, then the output would be "Hello Goodbye"
       let botMsg = "";
@@ -108,7 +112,7 @@ express()
       let count = 0;
       text.match(reg_greeting).forEach((ele) => {
         if (ele !== "" && ele !== " " && count === 0) {
-          console.log(ele);
+          //console.log(ele);
           botMsg += "Hello "; // add hello at the end
           count++;
         }

@@ -26,10 +26,11 @@ const sendMessage = (event) => {
   const message = { author: "user", text: messageInput.value };
   updateConversation(message);
 
-  fetch(`/bot-message/?author=bot&text=${message.text}`)
+  fetch(`/bot-message/?author=${message.author}&text=${message.text}`)
     .then((res) => res.json())
     .then((data) => {
-      //console.log(data);
+      console.log(data);
+      console.log(data.message);
       updateConversation(data.message);
     });
 };
